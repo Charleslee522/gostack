@@ -5,40 +5,44 @@ import (
 	. "strings"
 )
 
+type Token struct {
+	Kind  TokenKind
+	Value int
+}
+
 type Tokenizer struct {
-	tokens []TokenKind
+	tokens []Token
 }
 
 func NewTokenizer(data string) *Tokenizer {
-	p := Tokenizer{}
+	p := new(Tokenizer)
 	stringTokens := Split(data, " ")
 
 	for _, data := range stringTokens {
 		switch data {
 		case "PUSH":
-			p.tokens = append(p.tokens, PUSH)
+			p.tokens = append(p.tokens, Token{PUSH, 0})
 		case "ADD":
-			p.tokens = append(p.tokens, ADD)
+			p.tokens = append(p.tokens, Token{ADD, 0})
 		case "SUB":
-			p.tokens = append(p.tokens, SUB)
+			p.tokens = append(p.tokens, Token{SUB, 0})
 		case "DROP":
-			p.tokens = append(p.tokens, DROP)
+			p.tokens = append(p.tokens, Token{DROP, 0})
 		case "DUP":
-			p.tokens = append(p.tokens, DUP)
+			p.tokens = append(p.tokens, Token{DUP, 0})
 		case "PRINT":
-			p.tokens = append(p.tokens, PRINT)
+			p.tokens = append(p.tokens, Token{PRINT, 0})
 		default:
-			if _, err := strconv.Atoi(data); err == nil {
-				p.tokens = append(p.tokens, NUM)
+			if value, err := strconv.Atoi(data); err == nil {
+				p.tokens = append(p.tokens, Token{NUM, value})
 			}
-
 		}
 	}
 
-	return &p
+	return p
 }
 
-func (t *Tokenizer) GetToken() TokenKind {
+func (t *Tokenizer) GetToken() Token {
 	token := t.tokens[0]
 	t.tokens = t.tokens[1:]
 	return token

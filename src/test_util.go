@@ -1,7 +1,9 @@
 package gostack
 
-// func Check(t *testing.T, result Element, correct Element) {
-// 	if result != correct {
-// 		t.Errorf("stack.Top() == %q, want %q", result, correct)
-// 	}
-// }
+import "testing"
+
+func Check(t *testing.T, result ElementType, correct ElementType) {
+	if result != correct {
+		t.Errorf("result == %d, want %d", result, correct)
+	}
+}

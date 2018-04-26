@@ -3,7 +3,8 @@ package gostack
 type TokenKind uint16
 
 const (
-	PUSH TokenKind = 0 + iota
+	NONE TokenKind = 0 + iota
+	PUSH
 	ADD
 	SUB
 	DROP
@@ -15,6 +16,7 @@ const (
 
 func (kind TokenKind) String() string {
 	names := [...]string{
+		"NONE",
 		"PUSH",
 		"ADD",
 		"SUB",
@@ -23,7 +25,7 @@ func (kind TokenKind) String() string {
 		"PRINT",
 		"NUM",
 		"EOF"}
-	if kind < PUSH || kind > EOF {
+	if kind < NONE || kind > EOF {
 		return "UNKNOWN"
 	}
 	return names[kind]

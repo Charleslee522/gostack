@@ -1,25 +1,33 @@
 package gostack
 
+type ElementType int
+
 type Stack struct {
-	elements []ASTElement
+	Elements []ElementType
 }
 
-func NewStack(tokenizer *Tokenizer) *Stack {
+func NewStack() *Stack {
 	p := new(Stack)
+	p.Elements = make([]ElementType, 0)
 	return p
 }
 
-func (s *Stack) Push(e ASTElement) {
-	s.elements = append(s.elements, e)
+func (s *Stack) Push(e ElementType) {
+	s.Elements = append([]ElementType{e}, s.Elements...)
 }
 
-func (s *Stack) Pop() ASTElement {
-	len := len(s.elements)
-	e := s.elements[len-1]
-	s.elements = s.elements[:len-1]
+func (s *Stack) Pop() ElementType {
+	if len(s.Elements) == 0 {
+		return 0
+	}
+	e := s.Elements[0]
+	s.Elements = s.Elements[1:]
 	return e
 }
 
-func (s *Stack) Top() ASTElement {
-	return s.elements[len(s.elements)-1]
+func (s *Stack) Top() ElementType {
+	if len(s.Elements) == 0 {
+		return 0
+	}
+	return s.Elements[0]
 }

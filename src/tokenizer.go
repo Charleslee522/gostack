@@ -2,12 +2,13 @@ package gostack
 
 import (
 	"strconv"
+	"strings"
 	. "strings"
 )
 
 type Token struct {
 	Kind  TokenKind
-	Value int
+	Value ElementType
 }
 
 type Tokenizer struct {
@@ -16,7 +17,8 @@ type Tokenizer struct {
 
 func NewTokenizer(data string) *Tokenizer {
 	p := new(Tokenizer)
-	stringTokens := Split(data, " ")
+	s := strings.TrimSpace(data)
+	stringTokens := Split(s, " ")
 
 	for _, data := range stringTokens {
 		switch data {
@@ -34,10 +36,11 @@ func NewTokenizer(data string) *Tokenizer {
 			p.tokens = append(p.tokens, Token{PRINT, 0})
 		default:
 			if value, err := strconv.Atoi(data); err == nil {
-				p.tokens = append(p.tokens, Token{NUM, value})
+				p.tokens = append(p.tokens, Token{NUM, ElementType(value)})
 			}
 		}
 	}
+	p.tokens = append(p.tokens, Token{EOF, 0})
 
 	return p
 }

@@ -1,10 +1,10 @@
 package gostack
 
 type Parser struct {
-	tokenizer Tokenizer
+	tokenizer *Tokenizer
 }
 
-func NewParser(tokenizer Tokenizer) *Parser {
+func NewParser(tokenizer *Tokenizer) *Parser {
 	p := new(Parser)
 	p.tokenizer = tokenizer
 	return p
